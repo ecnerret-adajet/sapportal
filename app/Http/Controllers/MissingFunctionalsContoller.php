@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingManagementNotification;
+use App\Notifications\MissingFunctionalToManagementFailedNotification;
+use App\Notifications\MissingFunctionalToManagementSuccessNotification;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
@@ -74,7 +75,14 @@ class MissingFunctionalsContoller extends Controller
         /**
          * Notify management user role: who will selected as approver
          */
-    Notification::send($functional->users, new MissingManagementNotification($functional));
+        foreach($functional->statuses as $status){
+            if($status->id == 1){
+            Notification::send($functional->users, new MissingFunctionalToManagementSuccessNotification($functional));
+            }else{
+            Notification::send($missing->user, new MissingFunctionalToManagementFailedNotification($functional));
+             }
+        }
+
        
     
 

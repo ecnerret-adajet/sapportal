@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingGrantNotification;
-use App\Notifications\MissingDenyNotification;
+use App\Notifications\MissingManagementToMissingSuccessNotification;
+use App\Notifications\MissingManagementToMissingFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -71,9 +71,9 @@ class MissingManagementsController extends Controller
          */
         foreach($management->statuses as $status){
             if($status->id == 1){
-    Notification::send($missing->user, new MissingGrantNotification($management));
+    Notification::send($missing->user, new MissingManagementToMissingSuccessNotification($management));
             }else{
-    Notification::send($missing->user, new MissingDenyNotification($management));            
+    Notification::send($missing->user, new MissingManagementToMissingFailedNotification($management));            
             }
         }
        

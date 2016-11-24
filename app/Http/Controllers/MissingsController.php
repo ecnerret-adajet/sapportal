@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingApproverNotification;
+use App\Notifications\MissingToApproverSuccessNotification;
 use App\Http\Requests\MissingRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -91,7 +91,8 @@ class MissingsController extends Controller
         /**
          * notify user an emal
          */
-        Notification::send($missing->users, new MissingApproverNotification($missing));
+
+        Notification::send($missing->users, new MissingToApproverSuccessNotification($missing));
 
 
         flashy()->success('Successfully submitted a missing authorization!');

@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Approver;
+use App\Missing;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class FunctionalNotification extends Notification
+class MissingToApproverSuccessNotification extends Notification
 {
     use Queueable;
 
-    protected $approver;
+    protected $missing;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Approver $approver)
+    public function __construct(Missing $missing)
     {
-        $this->approver = $approver;
+        $this->missing = $missing;
     }
 
     /**
@@ -45,10 +45,10 @@ class FunctionalNotification extends Notification
     {
         return (new MailMessage)
                     ->success()
-                    ->subject('New Missing Authorization Form : SAP Personnel')
+                    ->subject('New Missing Authorization Form')
                     ->greeting('Good day!')
-                    ->line($this->approver->name.' has submitted a missing authorization under your approval')
-                    ->action('Visit the portal now',  url('/missings/functional/create/'.$this->approver->id))
+                    ->line($this->missing->requested_by.' has submitted a missing authorization under your approval')
+                    ->action('Visit the portal now',  url('/missings/approver/create/'.$this->missing->id))
                     ->line('Thank you, have a nice day!');
     }
 

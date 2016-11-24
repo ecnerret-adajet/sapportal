@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Management;
+use App\Approver;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingGrantNotification extends Notification
+class MissingApproverToFunctionalSuccessNotification extends Notification
 {
     use Queueable;
 
-    protected $management;
+    protected $approver;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Management $management)
+    public function __construct(Approver $approver)
     {
-        $this->management = $management;
+        $this->approver = $approver;
     }
 
     /**
@@ -44,10 +44,11 @@ class MissingGrantNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Missing Authorization: Approved!')
-                    ->greeting('Congratulations!')
-                    ->line($this->management->name.' has approved your missing authorization form.')
-                    ->grant()
+                    ->success()
+                    ->subject('New Missing Authorization Form : SAP Personnel')
+                    ->greeting('Good day!')
+                    ->line($this->approver->name.' has submitted a missing authorization under your approval')
+                    ->action('Visit the portal now',  url('/missings/functional/create/'.$this->approver->id))
                     ->line('Thank you, have a nice day!');
     }
 

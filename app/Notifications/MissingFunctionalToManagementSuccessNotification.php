@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Management;
+use App\Functional;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingDenyNotification extends Notification
+class MissingFunctionalToManagementSuccessNotification extends Notification
 {
     use Queueable;
 
-    protected $management;
+    protected $functional;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Management $management)
+    public function __construct(Functional $functional)
     {
-        $this->management = $management;
+        $this->functional = $functional;
     }
 
     /**
@@ -44,10 +44,11 @@ class MissingDenyNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Missing Authorization: Deny!')
+                    ->success()
+                    ->subject('New Missing Authorization Form: Management approval')
                     ->greeting('Good day!')
-                    ->line($this->management->name.' has denied your missing authorization form.')
-                    ->failed()
+                    ->line($this->functional->name.' has submitted a missing authorization under your approval')
+                    ->action('Visit the portal now',  url('/missings/management/create/'.$this->functional->id))
                     ->line('Thank you, have a nice day!');
     }
 

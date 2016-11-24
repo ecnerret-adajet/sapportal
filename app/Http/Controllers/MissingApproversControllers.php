@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\FunctionalNotification;
+use App\Notifications\MissingApproverToFunctionalFailedNotification;
+use App\Notifications\MissingApproverToFunctionalSuccessNotification;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
@@ -76,7 +77,14 @@ class MissingApproversControllers extends Controller
         /**
          * Notify the approver via email
          */
-        Notification::send($approver->users, new FunctionalNotification($approver));
+        foreach($approver->statuses as $status){
+            if($status->id == 1){
+ Notification::send($approver->users, new MissingApproverToFunctionalSuccessNotification($approver));
+            }else{
+  Notification::send($missing->user, new MissingApproverToFunctionalFailedNotification($approver));               
+            }
+        }
+       
        
 
         flashy()->success('Successfully Approved!');
