@@ -9,7 +9,7 @@
  	<div class="col-md-4 text-center box-link-1">
  		<div class="box-layer">
  			<i class="ion-ios-help-outline" style="font-size: 100px;"></i>
- 			<h4>Missing Authorization Form</h4>
+ 			<h4 class="title-text">Missing Authorization Form</h4>
  			<a class="btn btn-primary" href="{{url('missings/create')}}">
  			Create Form
  			</a>
@@ -19,7 +19,7 @@
  	<div class="col-md-4 text-center box-link-2">
  		<div class="box-layer">
  			<i class="ion-ios-people-outline" style="font-size: 100px;"></i>
- 			<h4>User Creation/Deletion Form</h4>
+ 			<h4 class="title-text">User Creation/Deletion Form</h4>
  			<a class="btn btn-primary" href="{{url('sapusers/create')}}">
  			Create Form
  			</a>
