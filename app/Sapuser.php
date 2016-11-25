@@ -2,11 +2,15 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class Sapuser extends Model
 {
+
+    use Notifiable;
+
     protected $fillable = [
         'requested_by',
     	'requested_date',
@@ -33,6 +37,20 @@ class Sapuser extends Model
 
     public function user(){
     	return $this->belongsTo('App\User');
+    }
+
+
+    /**
+     * list users who will approve the Sap user creation form
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
+
+    public function getUserListAttribute()
+    {
+        return $this->users->pluck('id')->all();
     }
 
     /**

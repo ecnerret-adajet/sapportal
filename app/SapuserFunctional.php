@@ -2,11 +2,15 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class SapuserFunctional extends Model
 {
+
+    use Notifiable;
+
     protected $table = 'sapuser_functionals';
 
     protected $fillable = [
@@ -39,6 +43,19 @@ class SapuserFunctional extends Model
     public function user()
     {
     	return $this->belongsTo('App\User');
+    }
+
+    /**
+     * list users who will approver the user create/deletion form
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User','sapuser_functional_user', 'sapuser_functional_id','user_id')->withTimestamps();
+    }
+
+    public function getUserListAttribute()
+    {
+        return $this->users->pluck('id')->all();
     }
 
     /**

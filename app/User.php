@@ -98,13 +98,5 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Functional');
     }
 
-    /**
-     * reference user table to missing authorizatio form approval management
-     */
-    public function managementsList()
-    {
-        return $this->belongsToMany('App\Management');
-    }
-
 
 }

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class SapuserManagement extends Model
 {
     protected $table = 'sapuser_managements';
+
+    use Notifiable;
 
     protected $fillable = [
     	'name',

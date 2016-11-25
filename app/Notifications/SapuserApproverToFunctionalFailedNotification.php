@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Approver;
+use App\SapuserApprover;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingApproverToFunctionalFailedNotification extends Notification
+class SapuserApproverToFunctionalFailedNotification extends Notification
 {
     use Queueable;
 
-    protected $approver;
+    protected $sapuserApprover;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Approver $approver)
+    public function __construct(SapuserApprover $sapuserApprover)
     {
-        $this->approver = $approver;
+        $this->sapuserApprover = $sapuserApprover;
     }
 
     /**
@@ -43,10 +43,10 @@ class MissingApproverToFunctionalFailedNotification extends Notification
      */
     public function toMail($notifiable)
     {
-           return (new MailMessage)
-                    ->subject('Missing Authorization: Denied!')
+        return (new MailMessage)
+                    ->subject('User Creation/Deletion Denied!')
                     ->greeting('Good day!')
-                    ->line($this->approver->name.' has denied your missing authorization form.')
+                    ->line($this->sapuserApprover->name.' has denied your user creation/deletion form.')
                     ->failed()
                     ->line('Thank you, have a nice day!');
     }

@@ -72,6 +72,22 @@
 	</div>
 	</div>
 
+	<div class="form-group{{ $errors->has('user_list') ? ' has-error' : '' }}">
+	<label class="form-label col-md-3">
+		{!! Form::label('user_list', 'Select Approver:') !!}
+	</label>
+	<div class="col-md-6">
+	{!! Form::select('user_list',  $users, null,  ['class' => 'form-control', 'placeholder' => '--Select Approver--']) !!}    
+
+	@if($errors->has('user_list'))
+	<span class="help-block">
+	<strong>{{ $errors->first('user_list') }}</strong>
+	</span>
+	@endif
+	</div>
+	</div>
+
+	
 	<!-- submit or cancel button section -->
 
 	<div class="form-group" style="margin-bottom: 20px;">

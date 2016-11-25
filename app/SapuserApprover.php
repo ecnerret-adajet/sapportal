@@ -2,11 +2,15 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class SapuserApprover extends Model
 {
+
+    use Notifiable;    
+
 	protected $table = 'sapuser_approvers';
 
     protected $fillable = [
@@ -26,6 +30,19 @@ class SapuserApprover extends Model
     public function user()
     {
     	return $this->belongsTo('App\User');
+    }
+
+    /**
+     * list User to user creation form
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User','sapuser_approver_user','sapuser_approver_id','user_id')->withTimestamps();
+    }
+
+    public function getUserListAttribute()
+    {
+        return $this->users->pluck('id')->all();
     }
 
     /**

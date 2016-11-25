@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Notifications\SapuserToApproverSuccessNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use App\Http\Requests\SapuserRequest;
 use Illuminate\Support\Facades\Auth;
@@ -57,10 +59,15 @@ class SapusersController extends Controller
         $targetservers = Targetserver::pluck('name','id');
         $sapmodules = Sapmodule::pluck('name','id');
 
+        $users = User::whereHas('roles', function($q){
+            $q->where('id',2);
+        })->pluck('name','id');
+
 
 
         return view('sapusers.create', compact('companies',
             'departments',
+            'users',
             'targetservers',
             'sapmodules'));
     }
@@ -77,7 +84,14 @@ class SapusersController extends Controller
         $sapuser->companies()->attach($request->input('company_list'));
         $sapuser->departments()->attach($request->input('department_list'));
         $sapuser->targetservers()->attach($request->input('targetserver_list'));
+        $sapuser->users()->attach($request->input('user_list'));
         //$sapuser->sapmodules->attach($request->input('sapmodule_list'));
+
+        /**
+         * Notify the approver via email notification
+         */
+        Notification::send($sapuser->users, new SapuserToApproverSuccessNotification($sapuser));
+
         flashy()->success('Form successfully created!');
         return redirect('sapusers');
     }

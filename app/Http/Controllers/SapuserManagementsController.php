@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Notifications\SapuserManagementToSapuserSuccessNotification;
+use App\Notifications\SapuserManagementToSapuserFailedNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
@@ -52,6 +55,17 @@ class SapuserManagementsController extends Controller
         $sapuser = Sapuser::findOrFail($id);
         $sapuserManagement->sapuser()->associate($sapuser);
         $sapuser->sapuserManagements()->save($sapuserManagement);
+
+        /**
+         * Notify requester for final status for approval
+         */
+        foreach($sapuserManagement->statuses as $status){
+            if($status->id == 1){
+        Notification::send($sapuser->user, new SapuserManagementToSapuserSuccessNotification($sapuserManagement));
+            }else{
+        Notification::send($sapuser->user, new SapuserManagementToSapuserFailedNotification($sapuserManagement));
+            }
+        }
 
         flashy()->success('Succefully Updated !');
         return redirect('sapusers');

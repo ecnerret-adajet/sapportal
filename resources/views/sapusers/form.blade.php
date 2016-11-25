@@ -208,6 +208,21 @@ Requested By:
 </div>
 </div>
 
+<div class="form-group{{ $errors->has('user_list') ? ' has-error' : '' }}">
+<label class="col-md-3 control-label"> 
+{!! Form::label('user_list', 'Select Approver:')  !!}
+</label>
+<div class="col-md-9">
+{!! Form::select('user_list',  $users, null,  ['class' => 'form-control', 'placeholder' => '--Select Approver--']) !!}     
+
+@if ($errors->has('user_list'))
+<span class="help-block">
+<strong>{{ $errors->first('user_list') }}</strong>
+</span>
+@endif
+</div>
+</div>
+
 
  <div class="form-group{{ $errors->has('requested_comment') ? ' has-error' : '' }}">
 <label class="col-md-3 control-label"> 

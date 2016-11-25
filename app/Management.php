@@ -30,20 +30,6 @@ class Management extends Model
     }
 
     /**
-     * list user who will approved the missing authorization form
-     */
-    public function users()
-    {
-        return $this->belongsToMany('App\User')->withTimestamps();
-    }
-
-    public function getUserListAttribute()
-    {
-        return $this->users->pluck('id')->all();
-    }
-
-
-    /**
      * bind to create with missing data
      */
     public function missing()
