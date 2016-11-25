@@ -15,6 +15,10 @@ nav{
 	border-bottom: 1px solid #eee;
 }
 
+.title-text{
+	font-family: 'Miriam Libre', sans-serif;
+}
+
 body{
 	font-family: 'Source Sans Pro', sans-serif;
 }
@@ -71,6 +75,38 @@ border-bottom: 1px solid #bdc3c7;
 	font-size: 12px;
 }
 
+
+.box-link-1 {
+	margin: 10px;
+	position: relative;
+	height: 250px;
+	color: #fff;
+	background: url('../img/web/form1.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.box-link-2 {
+	margin: 10px;
+	position: relative;
+	height: 250px;
+	color: #fff;
+	background: url('../img/web/form2.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.box-layer {
+	position: absolute;
+	padding:10px;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(38, 44, 44, 0.6);
+}
 
 
 @charset "UTF-8";/*!

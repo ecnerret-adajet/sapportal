@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Notifications\MissingApproverToFunctionalFailedNotification;
 use App\Notifications\MissingApproverToFunctionalSuccessNotification;
 use App\Http\Requests;
+use App\Http\Requests\MissingApproverRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -59,12 +60,8 @@ class MissingApproversControllers extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, Request $request)
+    public function store($id, MissingApproverRequest $request)
     {
-        $this->validate($request, [
-            'name',
-            'approver_date'
-        ]);
 
         $approver = Auth::user()->approvers()->create($request->all());
         $approver->statuses()->attach($request->input('status_list'));

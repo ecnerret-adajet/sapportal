@@ -8,6 +8,7 @@ use App\Notifications\SapuserManagementToSapuserSuccessNotification;
 use App\Notifications\SapuserManagementToSapuserFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
+use App\Http\Requests\SapuserManagementRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
 use Carbon\Carbon;
@@ -47,7 +48,7 @@ class SapuserManagementsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, Request $request)
+    public function store($id, SapuserManagementRequest $request)
     {
         $sapuserManagement = Auth::user()->sapuserManagements()->create($request->all());
         $sapuserManagement->statuses()->attach($request->input('status_list'));

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\SapuserApproverToFunctionalSuccessNotification;
 use App\Notifications\SapuserApproverToFunctionalFailedNotification;
 use App\Http\Requests;
+use App\Http\Requests\SapuserApproverRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
 use App\Sapuser;
@@ -57,7 +58,7 @@ class SapuserApproversController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, Request $request)
+    public function store($id, SapuserApproverRequest $request)
     {
         $sapuserApprover = Auth::user()->sapuserApprovers()->create($request->all());
         $sapuserApprover->statuses()->attach($request->input('status_list'));

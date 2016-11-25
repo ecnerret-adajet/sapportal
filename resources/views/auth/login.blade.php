@@ -11,19 +11,8 @@
     <title>{{ config('app.name', 'SAP Request') }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:300,400,700" rel="stylesheet">
-
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
-
-    <!-- icons -->
-    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-         <!-- Datatables styles   -->
-    <link href="{{ asset('/css/dataTables.tableTools.css') }}" rel="stylesheet" >
-    <link href="{{ asset('/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/responsive.bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/buttons.bootstrap.min.css') }}" rel="stylesheet" /> 
+    <link rel="stylesheet" type="text/css" href="{{asset('css/all.css')}}">
 
     <!-- Scripts -->
     <script>
@@ -31,14 +20,22 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <style type="text/css">
+        body{
+            background: url('../public/img/web/bg.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="row" style="margin-top: 200px">
+        <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading text-center">
+                    <h4 class="title-text">  Sap Form Request Portal </h4>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
@@ -71,25 +68,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                     
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary btn-block">
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                    Forgot Your Password?
-                                </a>
+                               
                             </div>
                         </div>
                     </form>

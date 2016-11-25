@@ -8,6 +8,7 @@ use App\Notifications\MissingManagementToMissingSuccessNotification;
 use App\Notifications\MissingManagementToMissingFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
+use App\Http\Requests\MissingManagementRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
 use App\User;
@@ -52,13 +53,8 @@ class MissingManagementsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store($id, Request $request)
+     public function store($id, MissingManagementRequest $request)
     {
-        $this->validate($request, [
-            'name',
-            'approver_date'
-        ]);
-
         $management = Auth::user()->managements()->create($request->all());
         $management->statuses()->attach($request->input('status_list'));
 

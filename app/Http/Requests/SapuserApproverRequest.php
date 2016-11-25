@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MissingRequest extends FormRequest
+class SapuserApproverRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,19 @@ class MissingRequest extends FormRequest
     public function rules()
     {
         return [
-           'screen_shot' => 'required',
-           'targetsystem_list' => 'required',
-           'targetserver_list' => 'required',
-           'user_list' => 'required'
+            'name' => 'required',
+            'approved_date' => 'required|date',
+            'status_list' => 'required',
+            'user_list' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'requested_date.required' => 'This field is required',
-            'screen_shot.required' => 'This field is required',
-            'targetsystem_list.required' => 'This field is required',
-            'targetserver_list.required' => 'This field is required',
+            'name.required' => 'This field is required',
+            'approved_date.required' => 'This field is required',
+            'status_list.required' => 'This field is required',
             'user_list.required' => 'This field is required'
         ];
     }

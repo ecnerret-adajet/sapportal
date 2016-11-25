@@ -244,18 +244,21 @@ Requested By:
 
 
 
-
+<hr/>
 
 
 
 
 <!-- submit or cancel button section -->
 
-	<div class="form-group" style="margin-bottom: 20px;">
-      <div class="col-md-3 col-md-offset-9 text-right">
-        <button type="reset" class="btn btn-default">Cancel</button>
-        <input type="button" class="btn btn-primary" value="Submit" data-toggle="modal" data-target="#myModal">
+   <div class="form-group" style="margin-bottom: 20px;">
+      <div class="col-md-6">
+        <button type="reset" class="btn btn-default btn-block">Cancel</button>
       </div>
+
+      <div class="col-md-6">
+        <input type="button" class="btn btn-primary btn-block pull-right" value="Submit" data-toggle="modal" data-target="#myModal">
+    </div>
     </div>
 
 

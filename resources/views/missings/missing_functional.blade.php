@@ -3,7 +3,7 @@
 	
 	<div class="row title" style="padding: 0 20px 10px 20px; margin-bottom: 10px;">
 	<h3>
-	Functional Approver: Missing Authrization Form
+	Functional Approver: Missing authorization form
 	</h3>
 	<em>
 	Submitted by: <strong>{{ $missing->requested_by }}</strong>
@@ -19,7 +19,7 @@
 	<label class="form-label col-md-3">
 		{!! Form::label('name', 'Approver Name:') !!}
 	</label>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	{!! Form::text('name', Auth::user()->name,  ['class' => 'form-control']) !!}  
 	@if($errors->has('name'))
 	<span class="help-block">
@@ -33,7 +33,7 @@
 	<label class="form-label col-md-3">
 		{!! Form::label('comment', 'Comment:') !!}
 	</label>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
 	@if($errors->has('comment'))
 	<span class="help-block">
@@ -47,7 +47,7 @@
 	<label class="form-label col-md-3">
 		{!! Form::label('approved_date', 'Approved Date:') !!}
 	</label>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	{!! Form::input('date', 'approved_date', date('Y-m-d'), ['class' => 'form-control']) !!}
 	@if($errors->has('comment'))
 	<span class="help-block">
@@ -61,7 +61,7 @@
 	<label class="form-label col-md-3">
 		{!! Form::label('status_list', 'Status:') !!}
 	</label>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	{!! Form::select('status_list',  $statuses, null,  ['class' => 'form-control', 'placeholder' => '--Select Status--']) !!}    
 
 	@if($errors->has('status_list'))
@@ -76,7 +76,7 @@
 	<label class="form-label col-md-3">
 		{!! Form::label('user_list', 'Select Management User:') !!}
 	</label>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	{!! Form::select('user_list',  $users, null,  ['class' => 'form-control', 'placeholder' => '--Select Management Approval--']) !!}    
 
 	@if($errors->has('user_list'))
@@ -87,15 +87,20 @@
 	</div>
 	</div>
 
+	<hr/>
+
 
 	<!-- submit or cancel button section -->
-
-	<div class="form-group" style="margin-bottom: 20px;">
-      <div class="col-md-3 col-md-offset-9 text-right">
-        <button type="reset" class="btn btn-default">Cancel</button>
-        <input type="button" class="btn btn-primary" value="Submit" data-toggle="modal" data-target="#myModal">
+   <div class="form-group" style="margin-bottom: 20px;">
+      <div class="col-md-6">
+        <button type="reset" class="btn btn-default btn-block">Cancel</button>
       </div>
+
+      <div class="col-md-6">
+        <input type="button" class="btn btn-primary btn-block pull-right" value="Submit" data-toggle="modal" data-target="#myModal">
     </div>
+    </div>
+
 
 
 

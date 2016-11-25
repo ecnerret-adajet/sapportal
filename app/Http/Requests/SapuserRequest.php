@@ -31,7 +31,10 @@ class SapuserRequest extends FormRequest
             'email' => 'required|email|max:255',
             'tel_num' => 'required',
             'targetserver_list' => 'required',
-            'user_role' => 'required'
+            'user_role' => 'required',
+            'user_list' => 'required',
+            'company_list' => 'required',
+            'department_list' => 'required'
         ];
     }
 
@@ -45,7 +48,10 @@ class SapuserRequest extends FormRequest
            'email.required' => 'This field is required', 
            'tel_num.required' => 'This field is required', 
            'targetserver_list.required' => 'This field is required', 
-           'user_role.required' => 'This field is required'
+           'user_role.required' => 'This field is required',
+           'user_list.required' => 'This field is required',
+           'company_list.required' => 'This field is required',
+           'department_list.required' => 'This field is required'
         ];
     }
 }

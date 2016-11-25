@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Notifications\MissingFunctionalToManagementFailedNotification;
 use App\Notifications\MissingFunctionalToManagementSuccessNotification;
 use App\Http\Requests;
+use App\Http\Requests\MissingFunctionalRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -58,12 +59,8 @@ class MissingFunctionalsContoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, Request $request)
+    public function store($id, MissingFunctionalRequest $request)
     {
-        $this->validate($request, [
-            'name',
-            'approver_date'
-        ]);
 
         $functional = Auth::user()->functionals()->create($request->all());
         $functional->statuses()->attach($request->input('status_list'));

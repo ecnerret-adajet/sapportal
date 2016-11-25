@@ -4,8 +4,37 @@
                    
  <h3 class="title">Dashboard</h3>
 
+ <div class="row" style="padding: 10px;">
 
- <a class="btn btn-default button-add">
+ 	<div class="col-md-4 text-center box-link-1">
+ 		<div class="box-layer">
+ 			<i class="ion-ios-help-outline" style="font-size: 100px;"></i>
+ 			<h4>Missing Authorization Form</h4>
+ 			<a class="btn btn-primary" href="{{url('missings/create')}}">
+ 			Create Form
+ 			</a>
+ 		</div>
+ 	</div>
+
+ 	<div class="col-md-4 text-center box-link-2">
+ 		<div class="box-layer">
+ 			<i class="ion-ios-people-outline" style="font-size: 100px;"></i>
+ 			<h4>User Creation/Deletion Form</h4>
+ 			<a class="btn btn-primary" href="{{url('sapusers/create')}}">
+ 			Create Form
+ 			</a>
+ 		</div>
+ 	</div>
+
+
+ 		<div class="col-md-4">
+
+ 	</div>
+
+ </div>
+
+
+ <!-- <a class="btn btn-default button-add">
  <i class="ion-paper-airplane"></i>
  Add new form</a>
 
@@ -39,7 +68,7 @@
  </tbody>
 
 
- </table>
+ </table> -->
 
 
             

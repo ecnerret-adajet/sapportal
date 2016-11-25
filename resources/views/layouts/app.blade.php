@@ -110,7 +110,7 @@
           
         </div>
 
-
+        @role(('Administrator'))
           <div class="list-group item-group-sidebar">
           <a href="#" class="list-group-item item-sidebar">
            <i class="ion-gear-b"></i> Data Management
@@ -122,6 +122,7 @@
           <i class="ion-key"></i> Role Management
           </a>
         </div>
+        @endrole
 
 
 
