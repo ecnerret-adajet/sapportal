@@ -44,6 +44,18 @@ class CreateUserApprovalsTable extends Migration
             $table->timestamps();
         });
 
+         Schema::create('management_user', function(Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')
+                ->on('users')->onDelete('cascade');
+            $table->integer('management_id')->unsigned();
+            $table->foreign('management_id')->references('id')
+                ->on('managements')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+
+
         /**
          * Pivot tables for User sap creation/deletion form
          */
@@ -75,6 +87,16 @@ class CreateUserApprovalsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('sapuser_management_user', function(Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')
+                ->on('users')->onDelete('cascade');
+            $table->integer('sapuser_management_id')->unsigned();
+            $table->foreign('sapuser_management_id')->references('id')
+                ->on('sapuser_managements')->onDelete('cascade');
+            $table->timestamps();
+        });
+
 
     }
 
@@ -86,9 +108,11 @@ class CreateUserApprovalsTable extends Migration
     public function down()
     {
  
+        Schema::dropIfExists('sapuser_management_user');
         Schema::dropIfExists('sapuser_functional_user');
         Schema::dropIfExists('sapuser_approver_user');
         Schema::dropIfExists('sapuser_user');
+        Schema::dropIfExists('management_user');
         Schema::dropIfExists('functional_user');
         Schema::dropIfExists('approver_user');
         Schema::dropIfExists('missing_user');

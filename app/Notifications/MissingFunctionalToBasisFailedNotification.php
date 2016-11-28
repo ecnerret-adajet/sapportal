@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingFunctionalToManagementFailedNotification extends Notification
+class MissingFunctionalToBasisFailedNotification extends Notification
 {
     use Queueable;
 

@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\SapuserManagement;
+use App\Management;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SapuserManagementToSapuserFailedNotification extends Notification
+class MissingManagementToFunctionalFailedNotification extends Notification
 {
     use Queueable;
 
-    protected $sapuserManagement;
+    protected $management;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(SapuserManagement $sapuserManagement)
+    public function __construct(Management $management)
     {
-        $this->sapuserManagement = $sapuserManagement;
+        $this->management = $management;
     }
 
     /**
@@ -44,9 +44,9 @@ class SapuserManagementToSapuserFailedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('User Creation/Deletion Form: Deny!')
+                    ->subject('Missing Authorization: Deny!')
                     ->greeting('Good day!')
-                    ->line($this->sapuserManagement->name.' has denied your user creation/deletion form.')
+                    ->line($this->management->name.' has denied your missing authorization form.')
                     ->failed()
                     ->line('Thank you, have a nice day!');
     }

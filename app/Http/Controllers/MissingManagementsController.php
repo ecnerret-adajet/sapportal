@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingManagementToMissingSuccessNotification;
-use App\Notifications\MissingManagementToMissingFailedNotification;
+use App\Notifications\MissingManagementToFunctionalSuccessNotification;
+use App\Notifications\MissingManagementToFunctionalFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use App\Http\Requests\MissingManagementRequest;
@@ -40,10 +40,15 @@ class MissingManagementsController extends Controller
     {
         $missing = Missing::findOrFail($id);
         $statuses = Status::pluck('name','id');
+
+        $users = User::whereHas('roles', function($q){
+            $q->where('id',3);
+        })->pluck('name','id');
     
         return view('missings.missing_management', compact(
             'id',
             'statuses',
+            'users',
             'missing'));
     }
 
@@ -57,6 +62,7 @@ class MissingManagementsController extends Controller
     {
         $management = Auth::user()->managements()->create($request->all());
         $management->statuses()->attach($request->input('status_list'));
+        $management->users()->attach($request->input('user_list'));
 
         $missing = Missing::findOrFail($id);
         $management->missing()->associate($missing);
@@ -67,9 +73,9 @@ class MissingManagementsController extends Controller
          */
         foreach($management->statuses as $status){
             if($status->id == 1){
-    Notification::send($missing->user, new MissingManagementToMissingSuccessNotification($management));
+    Notification::send($management->users, new MissingManagementToFunctionalSuccessNotification($management));
             }else{
-    Notification::send($missing->user, new MissingManagementToMissingFailedNotification($management));            
+    Notification::send($missing->user, new MissingManagementToFunctionalFailedNotification($management));            
             }
         }
        

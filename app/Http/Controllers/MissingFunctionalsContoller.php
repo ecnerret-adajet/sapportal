@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingFunctionalToManagementFailedNotification;
-use App\Notifications\MissingFunctionalToManagementSuccessNotification;
+use App\Notifications\MissingFunctionalToBasisFailedNotification;
+use App\Notifications\MissingFunctionalToBasisSuccessNotification;
 use App\Http\Requests;
 use App\Http\Requests\MissingFunctionalRequest;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +43,7 @@ class MissingFunctionalsContoller extends Controller
         $statuses = Status::pluck('name','id');
 
         $users = User::whereHas('roles', function($q){
-            $q->where('id','4');
+            $q->where('id','5');
         })->pluck('name','id');
 
         return view('missings.missing_functional', compact(
@@ -74,9 +74,9 @@ class MissingFunctionalsContoller extends Controller
          */
         foreach($functional->statuses as $status){
             if($status->id == 1){
-            Notification::send($functional->users, new MissingFunctionalToManagementSuccessNotification($functional));
+            Notification::send($functional->users, new MissingFunctionalToBasisSuccessNotification($functional));
             }else{
-            Notification::send($missing->user, new MissingFunctionalToManagementFailedNotification($functional));
+            Notification::send($missing->user, new MissingFunctionalToBasisFailedNotification($functional));
              }
         }
 

@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SapuserManagementToSapuserSuccessNotification extends Notification
+class SapuserManagementToFunctionalFailedNotification extends Notification
 {
     use Queueable;
 
@@ -44,10 +44,10 @@ class SapuserManagementToSapuserSuccessNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('User Creation: Approved!')
-                    ->greeting('Congratulations!')
-                    ->line($this->sapuserManagement->name.' has approved your user creation/deletion form.')
-                    ->grant()
+                    ->subject('User Creation/Deletion Form: Deny!')
+                    ->greeting('Good day!')
+                    ->line($this->sapuserManagement->name.' has denied your user creation/deletion form.')
+                    ->failed()
                     ->line('Thank you, have a nice day!');
     }
 

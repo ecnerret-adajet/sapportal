@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\SapuserFunctionalToManagementSuccessNotification;
-use App\Notifications\SapuserFunctionalToManagementFailedNotification;
+use App\Notifications\SapuserFunctionalToBasisSuccessNotification;
+use App\Notifications\SapuserFunctionalToBasisFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use App\Http\Requests\SapuserFunctionalRequest;
@@ -40,7 +40,7 @@ class SapuserFunctionalsController extends Controller
         $statuses = Status::pluck('name','id');
         $sapuser = Sapuser::findOrFail($id);
         $users = User::whereHas('roles', function($q){
-            $q->where('id',4);
+            $q->where('id',5);
         })->pluck('name','id');
 
         return view('sapusers.sapuser_functionals', compact('statuses',
@@ -70,9 +70,9 @@ class SapuserFunctionalsController extends Controller
          */
         foreach($sapuserFunctional->statuses as $status){
             if($status->id == 1){
-        Notification::send($sapuserFunctional->users, new SapuserFunctionalToManagementSuccessNotification($sapuserFunctional));
+        Notification::send($sapuserFunctional->users, new SapuserFunctionalToBasisSuccessNotification($sapuserFunctional));
             }else{
-        Notification::send($sapuser->user, new SapuserFunctionalToManagementFailedNotification($sapuserFunctional));
+        Notification::send($sapuser->user, new SapuserFunctionalToBasisFailedNotification($sapuserFunctional));
             }
         }
 

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\SapuserApproverToFunctionalSuccessNotification;
-use App\Notifications\SapuserApproverToFunctionalFailedNotification;
+use App\Notifications\SapuserApproverToManagementSuccessNotification;
+use App\Notifications\SapuserApproverToManagementFailedNotification;
 use App\Http\Requests;
 use App\Http\Requests\SapuserApproverRequest;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +42,7 @@ class SapuserApproversController extends Controller
         $sapuser = Sapuser::findOrFail($id);
         $statuses = Status::pluck('name','id');
         $users = User::whereHas('roles', function($q){
-            $q->where('id',3);
+            $q->where('id',4);
         })->pluck('name','id');
 
         return view('sapusers.sapuser_approvers', compact(
@@ -73,10 +73,10 @@ class SapuserApproversController extends Controller
          */
         foreach($sapuserApprover->statuses as $status){
             if($status->id == 1){
-Notification::send($sapuserApprover->users, new SapuserApproverToFunctionalSuccessNotification($sapuserApprover));
+Notification::send($sapuserApprover->users, new SapuserApproverToManagementSuccessNotification($sapuserApprover));
             }
             else{
-Notification::send($sapuser->user, new SapuserApproverToFunctionalFailedNotification($sapuserApprover));
+Notification::send($sapuser->user, new SapuserApproverToManagementFailedNotification($sapuserApprover));
             }
         }
         flashy()->success('Approved successfully!');

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\MissingApproverToFunctionalFailedNotification;
-use App\Notifications\MissingApproverToFunctionalSuccessNotification;
+use App\Notifications\MissingApproverToManagementFailedNotification;
+use App\Notifications\MissingApproverToManagementSuccessNotification;
 use App\Http\Requests;
 use App\Http\Requests\MissingApproverRequest;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +44,7 @@ class MissingApproversControllers extends Controller
         $statuses = Status::pluck('name','id');
 
         $users = User::whereHas('roles', function($q){
-            $q->where('id', 3);
+            $q->where('id', 4);
         })->pluck('name','id');
 
         return view('missings.missing_approver', compact(
@@ -76,9 +76,9 @@ class MissingApproversControllers extends Controller
          */
         foreach($approver->statuses as $status){
             if($status->id == 1){
- Notification::send($approver->users, new MissingApproverToFunctionalSuccessNotification($approver));
+ Notification::send($approver->users, new MissingApproverToManagementSuccessNotification($approver));
             }else{
-  Notification::send($missing->user, new MissingApproverToFunctionalFailedNotification($approver));               
+  Notification::send($missing->user, new MissingApproverToManagementFailedNotification($approver));               
             }
         }
        

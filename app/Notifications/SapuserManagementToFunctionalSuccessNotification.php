@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Functional;
+use App\SapuserManagement;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingFunctionalToManagementSuccessNotification extends Notification
+class SapuserManagementToFunctionalSuccessNotification extends Notification
 {
     use Queueable;
 
-    protected $functional;
+    protected $sapuserManagement;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Functional $functional)
+    public function __construct(SapuserManagement $sapuserManagement)
     {
-        $this->functional = $functional;
+        $this->sapuserManagement = $sapuserManagement;
     }
 
     /**
@@ -43,12 +43,12 @@ class MissingFunctionalToManagementSuccessNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+      return (new MailMessage)
                     ->success()
-                    ->subject('New Missing Authorization Form: Management approval')
+                    ->subject('New Missing Authorization Form : SAP Personnel')
                     ->greeting('Good day!')
-                    ->line($this->functional->name.' has submitted a missing authorization under your approval')
-                    ->action('Visit the portal now',  url('/missings/management/create/'.$this->functional->id))
+                    ->line($this->sapuserManagement->name.' has submitted a missing authorization under your approval')
+                    ->action('Visit the portal now',  url('/missings/functional/create/'.$this->sapuserManagement->id))
                     ->line('Thank you, have a nice day!');
     }
 

@@ -74,6 +74,21 @@
 	</div>
 	</div>
 
+		<div class="form-group{{ $errors->has('user_list') ? ' has-error' : '' }}">
+	<label class="form-label col-md-3">
+		{!! Form::label('user_list', 'Select Dept Head:') !!}
+	</label>
+	<div class="col-md-9">
+	{!! Form::select('user_list',  $users, null,  ['class' => 'form-control', 'placeholder' => '--Select Status--']) !!}    
+
+	@if($errors->has('user_list'))
+	<span class="help-block">
+	<strong>{{ $errors->first('user_list') }}</strong>
+	</span>
+	@endif
+	</div>
+	</div>
+
 
 <hr/>
 	<!-- submit or cancel button section -->

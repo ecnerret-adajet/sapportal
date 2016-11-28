@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Notifications\SapuserManagementToSapuserSuccessNotification;
-use App\Notifications\SapuserManagementToSapuserFailedNotification;
+use App\Notifications\SapuserManagementToFunctionalSuccessNotification;
+use App\Notifications\SapuserManagementToFunctionalFailedNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use App\Http\Requests\SapuserManagementRequest;
@@ -38,8 +38,13 @@ class SapuserManagementsController extends Controller
     {
         $statuses = Status::pluck('name','id');
         $sapuser = Sapuser::findOrFail($id);
+        $users = User::whereHas('roles', function($q){
+            $q->where('id',3);
+        })->pluck('name','id');
+
+
         return view('sapusers.sapuser_managements', compact('statuses',
-            'sapuser'));
+            'sapuser','users'));
     }
 
     /**
@@ -52,6 +57,7 @@ class SapuserManagementsController extends Controller
     {
         $sapuserManagement = Auth::user()->sapuserManagements()->create($request->all());
         $sapuserManagement->statuses()->attach($request->input('status_list'));
+        $sapuserManagement->users()->attach($request->input('user_list'));
 
         $sapuser = Sapuser::findOrFail($id);
         $sapuserManagement->sapuser()->associate($sapuser);
@@ -62,9 +68,9 @@ class SapuserManagementsController extends Controller
          */
         foreach($sapuserManagement->statuses as $status){
             if($status->id == 1){
-        Notification::send($sapuser->user, new SapuserManagementToSapuserSuccessNotification($sapuserManagement));
+        Notification::send($sapuserManagement->users, new SapuserManagementToFunctionalSuccessNotification($sapuserManagement));
             }else{
-        Notification::send($sapuser->user, new SapuserManagementToSapuserFailedNotification($sapuserManagement));
+        Notification::send($sapuser->user, new SapuserManagementToFunctionalFailedNotification($sapuserManagement));
             }
         }
 

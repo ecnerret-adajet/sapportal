@@ -77,7 +77,7 @@
 
 	<div class="form-group{{ $errors->has('user_list') ? ' has-error' : ''}}">
 		<label class="form-label col-md-3">
-			{!! Form::label('user_list', 'Select Functional Approver:') !!}
+			{!! Form::label('user_list', 'Select Your Dept. head:') !!}
 		</label>
 		<div class="col-md-9">
 		{!! Form::select('user_list', $users, null, ['class' => 'form-control', 'placeholder' => '--- Select functional approver ---']) !!}

@@ -43,6 +43,16 @@ class SapuserManagement extends Model
     	return $this->belongsTo('App\User');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'sapuser_management_user', 'sapuser_management_id', 'user_id')->withTimestamps();
+    }
+
+    public function getUserListAttribute()
+    {
+        return $this->users->pluck('id')->all();
+    }
+
 
     /**
      * Bind sapuser data to sapuserManagement when storing

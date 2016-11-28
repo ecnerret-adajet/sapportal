@@ -11,10 +11,11 @@
     <tr>
       <th>Requested By</th>
       <th>Requested Date</th>
-      <th>Details</th>
       <th>Line Manager</th>
-      <th>Sap Personnel</th>
       <th>Department Head</th>
+      <th>Functional</th>
+      <th>Status</th>
+   
     </tr>
   </thead>
 
@@ -25,9 +26,7 @@
       <td>
       {{  date('m/d/Y', strtotime($sapuser->requested_date)) == '01/01/1970' ? 'N/A' : date('m/d/Y', strtotime($sapuser->requested_date))  }} 
       </td>
-      <td>
-      	{{ $sapuser->requested_comment }}
-      </td>
+ 
 
 
       <td>
@@ -47,6 +46,45 @@
         @endforelse     
       </td>
 
+      <!-- end sapuser approver -->
+
+                <td>
+        @forelse($sapuser->sapuserManagements as $approver)
+            @foreach($approver->statuses as $status)
+              @if($status->id == 1)
+  <button class="btn btn-default btn-block disabled"> Approved <i class="ion-checkmark"></i>  </button>
+              @else
+ <button class="btn btn-danger btn-block disabled"> Disapproved <i class="ion-close"></i>  </button>
+              @endif
+            @endforeach
+       @empty
+
+       @if(count($sapuser->sapuserApprovers))
+              @foreach($sapuser->sapuserApprovers as $approver)
+                  @foreach($approver->statuses as $status)
+                      @if($status->id == 1)
+         <a class="btn btn-primary btn-block" href="{{url('sapusers/management/create/'. $sapuser->id)}}">
+        Pending
+        </a>
+                      @else
+
+ <button class="btn btn-primary btn-block disabled">Pending</button>
+                      @endif
+                  @endforeach
+              @endforeach
+
+
+        @else
+
+        <button class="btn btn-primary btn-block disabled">Pending</button>
+
+        @endif
+
+        @endforelse     
+      </td>
+
+
+<!-- end sapuser management -->
 
           <td>
         @forelse($sapuser->sapuserFunctionals as $approver)
@@ -59,10 +97,10 @@
             @endforeach
        @empty
 
-       @if(count($sapuser->sapuserApprovers))
+       @if(count($sapuser->sapuserManagements))
 
 
-                    @foreach($sapuser->sapuserApprovers as $approver)
+                    @foreach($sapuser->sapuserManagements as $approver)
                         @foreach($approver->statuses as $status) 
                             @if($status->id ==1)
             <a class="btn btn-primary btn-block" href="{{url('sapusers/functional/create/'. $sapuser->id)}}">
@@ -86,42 +124,15 @@
         @endforelse     
       </td>
 
+      <!-- end sapuser functional -->
 
-
-            <td>
-        @forelse($sapuser->sapuserManagements as $approver)
-            @foreach($approver->statuses as $status)
-              @if($status->id == 1)
-  <button class="btn btn-default btn-block disabled"> Approved <i class="ion-checkmark"></i>  </button>
-              @else
- <button class="btn btn-danger btn-block disabled"> Disapproved <i class="ion-close"></i>  </button>
-              @endif
-            @endforeach
-       @empty
-
-       @if(count($sapuser->sapuserFunctionals))
-              @foreach($sapuser->sapuserFunctionals as $approver)
-                  @foreach($approver->statuses as $status)
-                      @if($status->id == 1)
-         <a class="btn btn-primary btn-block" href="{{url('sapusers/management/create/'. $sapuser->id)}}">
-        Pending
-        </a>
-                      @else
-
- <button class="btn btn-primary btn-block disabled">Pending</button>
-                      @endif
-                  @endforeach
-              @endforeach
-
-
-        @else
-
-        <button class="btn btn-primary btn-block disabled">Pending</button>
-
-        @endif
-
-        @endforelse     
+      <td>
+        <button class="btn btn-primary">Open</button>
       </td>
+
+
+
+  
 
     </tr>
     <tr>

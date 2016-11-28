@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MissingManagementToMissingSuccessNotification extends Notification
+class MissingManagementToFunctionalSuccessNotification extends Notification
 {
     use Queueable;
 
@@ -43,11 +43,12 @@ class MissingManagementToMissingSuccessNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject('Missing Authorization: Approved!')
-                    ->greeting('Congratulations!')
-                    ->line($this->management->name.' has approved your missing authorization form.')
-                    ->grant()
+               return (new MailMessage)
+                    ->success()
+                    ->subject('New Missing Authorization Form : SAP Personnel')
+                    ->greeting('Good day!')
+                    ->line($this->management->name.' has submitted a missing authorization under your approval')
+                    ->action('Visit the portal now',  url('/missings/functional/create/'.$this->management->id))
                     ->line('Thank you, have a nice day!');
     }
 
