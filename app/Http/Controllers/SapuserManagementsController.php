@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Flashy;
 use App\SapuserManagement;
 use App\Sapuser;
+use App\User;
 use App\Status;
 
 class SapuserManagementsController extends Controller

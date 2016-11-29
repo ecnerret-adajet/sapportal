@@ -77,7 +77,7 @@
 		{!! Form::label('user_list', 'Select Approver:') !!}
 	</label>
 	<div class="col-md-9">
-	{!! Form::select('user_list',  $users, null,  ['class' => 'form-control', 'placeholder' => '--Select Approver--']) !!}    
+	{!! Form::select('user_list',  $users, null,  ['class' => 'form-control']) !!}    
 
 	@if($errors->has('user_list'))
 	<span class="help-block">
