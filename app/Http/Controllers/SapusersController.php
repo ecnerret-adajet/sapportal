@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Notifications\SapuserToApproverSuccessNotification;
+use App\Notifications\SapuserFinalNotificationToRequester;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Requests;
 use App\Http\Requests\SapuserRequest;
@@ -20,6 +21,7 @@ use Carbon\Carbon;
 use DB;
 use Flashy;
 use App\Status;
+use App\FormStatus;
 
 class SapusersController extends Controller
 {
@@ -38,8 +40,10 @@ class SapusersController extends Controller
         $companies = Company::all();
         $departments = Department::all();
         $statuses = Status::all();
+        $formStatuses = FormStatus::pluck('name','id');
 
         return view('sapusers.index', compact('sapusers',
+            'formStatuses',
             'companies',
             'departments',
             'statuses',
@@ -128,6 +132,23 @@ class SapusersController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Change form ticket status
+     */
+    public function status(Request $request, Sapuser $sapuser)
+    {
+        $this->validate($request, [
+            'form_status_list' => 'required'
+        ]);
+        
+        $sapuser->formStatuses()->attach($request->input('form_status_list'));
+
+        Notification::send($sapuser->user, new SapuserFinalNotificationToRequester($sapuser));
+
+        flashy()->success('Form Status Updated Successfully!');
+        return redirect('sapusers');
     }
 
     /**

@@ -111,4 +111,18 @@ class Missing extends Model
           return static::where(compact('id'))->firstOrFail();
     }
 
+    /**
+     * Get form status
+     */
+
+    public function formStatuses()
+    {
+        return $this->belongsToMany('App\FormStatus','form_status_missing','missing_id','form_status_id')->withTimestamps();
+    }
+
+    public function getFormStatusListAttribute()
+    {
+        return $this->formStatuses->pluck('id')->all();
+    }
+
 }

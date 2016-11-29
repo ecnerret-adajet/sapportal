@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Notifications\MissingToApproverSuccessNotification;
+use App\Notifications\MissingFinalNotificationToRequester;
 use App\Http\Requests\MissingRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -13,6 +14,7 @@ use App\Http\Requests;
 use App\Targetsystem;
 use App\Targetserver;
 use App\Management;
+use App\FormStatus;
 use App\Functional;
 use Carbon\Carbon;
 use App\Approver;
@@ -43,8 +45,12 @@ class MissingsController extends Controller
         $targersystems = Targetsystem::all();
         $targerservers = Targetserver::all();        
         $statuses = Status::all();
+        $formStatuses = FormStatus::pluck('name','id');
+
+
         return view('missings.index', compact('missings',
             'approvers',
+            'formStatuses',
             'statuses',
             'targerservers',
             'targersystems'));
@@ -131,6 +137,22 @@ class MissingsController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Update Form ticket Status
+     */
+    public function status(Missing $missing, Request $request)
+    {
+        $this->validate($request, [
+            'form_status_list' => 'required'
+        ]);
+        $missing->formStatuses()->attach($request->input('form_status_list'));
+
+        Notification::send($missing->user, new MissingFinalNotificationToRequester($missing));
+
+        flashy()->success('Ticket Updated Successfully!');
+        return redirect('missings');
     }
 
     /**

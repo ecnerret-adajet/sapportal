@@ -24,7 +24,18 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/home', 'HomeController@index');
+
+	/**
+	 * Missing Form Controller resource
+	 */
 	Route::resource('missings','MissingsController');
+	Route::patch('missings/status/{missing}', 'MissingsController@status');
+
+	/**
+	 * Sapuser Form controller resource
+	 */
+	Route::resource('sapusers','SapusersController');
+	Route::patch('sapusers/status/{sapuser}', 'SapusersController@status');
 
 	/**
 	 * Missing Approvers Controller setup
@@ -68,7 +79,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
-	Route::resource('sapusers','SapusersController');
+
 
 	Route::resource('users','UserController');
 	Route::resource('roles','RoleController');

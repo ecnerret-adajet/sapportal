@@ -150,4 +150,17 @@ class Sapuser extends Model
         return $this->sapmodules->pluck('id')->all();
     } 
 
+    /**
+     * Get form status
+     */
+    public function formStatuses()
+    {
+      return $this->belongsToMany('App\FormStatus', 'form_status_sapuser', 'sapuser_id','form_status_id')->withTimestamps();   
+    }
+
+    public function getFormStatusListAttribute()
+    {
+        return $this->formStatuses->pluck('id')->all();
+    }
+
 }

@@ -138,7 +138,9 @@
       <!-- end functional button -->
 
     <td>
-    <button class="btn btn-primary"> Open</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#form-status-missing-{{$missing->id}}">
+  Open
+  </button>
     </td>
 
 
@@ -149,6 +151,47 @@
   </tbody>
 </table> 
 
+@foreach($missings as $missing)
+<!-- Change from status -->
+<div class="modal fade" id="form-status-missing-{{$missing->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"> Form Status </h4>
+      </div>
+      <div class="modal-body">
+
+      {!! Form::model($missing, ['method' => 'PATCH', 'action' => ['MissingsController@status', $missing->id], 'class' => 'form-horizontal']) !!} 
+      {!! csrf_field() !!}
+
+       <div class="form-group{{ $errors->has('form_status_list') ? ' has-error' : '' }}">
+      <label class="col-md-3 control-label"> 
+      {!! Form::label('form_status_list', 'Select Approver:')  !!}
+      </label>
+      <div class="col-md-9">
+      {!! Form::select('form_status_list',  $formStatuses, null,  ['class' => 'form-control', 'placeholder' => '--Select Form Status--']) !!}     
+
+      @if ($errors->has('form_status_list'))
+      <span class="help-block">
+      <strong>{{ $errors->first('form_status_list') }}</strong>
+      </span>
+      @endif
+      </div>
+      </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    {!! Form::close() !!}
+    </div>
+  </div>
+</div>
+@endforeach
 
 
 @endsection

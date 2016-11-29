@@ -100,11 +100,11 @@
 
 
         <div class="list-group item-group-sidebar">
-          <a href="{{url('missings')}}" class="{{ Request::path() == 'missings/create' ? 'active' : '' }} list-group-item item-sidebar">
+          <a href="{{url('missings')}}" class="{{ Request::path() == 'missings' ? 'active' : '' }} list-group-item item-sidebar">
            <i class="ion-android-unlock"></i> Missing Authorization
           </a>
 
-          <a href="{{url('sapusers')}}" class="{{ Request::path() == 'sapusers/create' ? 'active' : '' }} list-group-item item-sidebar">
+          <a href="{{url('sapusers')}}" class="{{ Request::path() == 'sapusers' ? 'active' : '' }} list-group-item item-sidebar">
           <i class="ion-android-person-add"></i> User Creation
           </a>
           
